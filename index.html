@@ -121,7 +121,7 @@
     var boxSize = 5;
     // Various global THREE.Objects.
     var scene;
-    var cube;
+    var cubes = [];
     var controls;
     var effect;
     var camera;
@@ -192,13 +192,27 @@
         ////////
 
 
-        cube = new THREE.Mesh(geometry, material);
+        [
+            [0, controls.userHeight, -1],
+            [-1, controls.userHeight, 0],
+            [0, controls.userHeight, 1],
+            [1, controls.userHeight, 0],
+            [1, controls.userHeight, -1],
+            [-1, controls.userHeight, 1],
+            [-1, controls.userHeight, -1],
+            [1, controls.userHeight, 1],
+        ].forEach(x => {
+            const cube = new THREE.Mesh(geometry, material);
 
         // Position cube mesh to be right in front of you.
-        cube.position.set(0, controls.userHeight, -1);
+        cube.position.set(x[0], x[1], x[2]);
 
         // Add cube mesh to your three.js scene
         scene.add(cube);
+        cubes.push(cube);
+        console.log(cube);
+        });
+
 
         window.addEventListener('resize', onResize, true);
         window.addEventListener('vrdisplaypresentchange', onResize, true);
@@ -259,7 +273,10 @@
         lastRenderTime = timestamp;
 
         // Apply rotation to cube mesh
-        cube.rotation.y += delta * 0.0006;
+        cubes.forEach((x) => {
+            x.rotation.y += delta * 0.0006;
+        });
+
         //cube.rotation.x += delta * 0.0002;
 
         // Only update controls if we're presenting.
