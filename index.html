@@ -171,24 +171,27 @@
         //var material = new THREE.MeshNormalMaterial();
         ////////
         var textureLoader = new THREE.TextureLoader();
-        const offset = Math.round(Math.random() * 4);
-        var a  =[0,1,2,3,4,5];
-        shuffle(a);
-        var texture0 = textureLoader.load('img/'+(offset + a[0])+'.jpg');
-        var texture1 = textureLoader.load('img/'+(offset +a[1])+'.jpg');
-        var texture2 = textureLoader.load('img/'+(offset +a[2])+'.jpg');
-        var texture3 = textureLoader.load('img/'+(offset +a[3])+'.jpg');
-        var texture4 = textureLoader.load('img/'+(offset +a[4])+'.jpg');
-        var texture5 = textureLoader.load('img/'+(offset +a[5])+'.jpg');
-        var materials = [
-            new THREE.MeshBasicMaterial({map: texture0}),
-            new THREE.MeshBasicMaterial({map: texture1}),
-            new THREE.MeshBasicMaterial({map: texture2}),
-            new THREE.MeshBasicMaterial({map: texture3}),
-            new THREE.MeshBasicMaterial({map: texture4}),
-            new THREE.MeshBasicMaterial({map: texture5})
-        ];
-        var material = new THREE.MultiMaterial(materials);
+        var getMaterial = function () {
+            const offset = Math.round(Math.random() * 4);
+            var a = [0, 1, 2, 3, 4, 5];
+            shuffle(a);
+            var texture0 = textureLoader.load('img/' + (offset + a[0]) + '.jpg');
+            var texture1 = textureLoader.load('img/' + (offset + a[1]) + '.jpg');
+            var texture2 = textureLoader.load('img/' + (offset + a[2]) + '.jpg');
+            var texture3 = textureLoader.load('img/' + (offset + a[3]) + '.jpg');
+            var texture4 = textureLoader.load('img/' + (offset + a[4]) + '.jpg');
+            var texture5 = textureLoader.load('img/' + (offset + a[5]) + '.jpg');
+            var materials = [
+                new THREE.MeshBasicMaterial({map: texture0}),
+                new THREE.MeshBasicMaterial({map: texture1}),
+                new THREE.MeshBasicMaterial({map: texture2}),
+                new THREE.MeshBasicMaterial({map: texture3}),
+                new THREE.MeshBasicMaterial({map: texture4}),
+                new THREE.MeshBasicMaterial({map: texture5})
+            ];
+            return materials;
+        };
+
         ////////
 
 
@@ -202,6 +205,8 @@
             [-1, controls.userHeight, -1],
             [1, controls.userHeight, 1],
         ].forEach(x => {
+            var materials = getMaterial();
+        var material = new THREE.MultiMaterial(materials);
             const cube = new THREE.Mesh(geometry, material);
 
         // Position cube mesh to be right in front of you.
